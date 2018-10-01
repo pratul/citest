@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView cardElevation="2dp"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginBottom="@dimen/spacing_8">
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+      android:id="@+id/patient_details"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/spacing_16"
+        android:paddingEnd="@dimen/spacing_16"
+        android:paddingTop="@dimen/spacing_16"
+        tools:ignore="RtlSymmetry">
+
+        <TextView
+          android:id="@+id/overdue_patient_name_age"
+          style="@style/Clinic.V2.TextAppearance.Subtitle1Left.Blue1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="@dimen/spacing_4"
+          android:layout_marginStart="@dimen/spacing_16"
+          android:drawablePadding="@dimen/spacing_16"
+          android:drawableStart="@drawable/ic_patient_female"
+          tools:text="Anisha Acharya" />
+
+        <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="@dimen/spacing_4"
+          android:layout_marginStart="@dimen/spacing_56"
+          android:orientation="horizontal">
+
+          <TextView
+            style="@style/Clinic.V2.TextAppearance.Body2Tag.Grey1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/overduelist_last_bp"
+            android:textAllCaps="true" />
+
+          <TextView
+            android:id="@+id/overdue_patient_bp"
+            style="@style/Clinic.V2.TextAppearance.Body2Left.Grey1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_4"
+            tools:text="175/85, 30 days ago" />
+        </LinearLayout>
+
+        <org.simple.clinic.widgets.TintableCompoundDrawableTextView
+          android:id="@+id/overdue_patient_phone_number"
+          style="@style/Clinic.V2.TextAppearance.Body2Left.Numeric.Grey1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="@dimen/spacing_4"
+          android:layout_marginStart="@dimen/spacing_56"
+          android:drawablePadding="@dimen/spacing_4"
+          android:drawableStart="@drawable/ic_call_16dp"
+          android:gravity="center"
+          android:visibility="gone" />
+
+        <TextView
+          android:id="@+id/overdue_days"
+          style="@style/Clinic.V2.TextAppearance.Body2Left.Red1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="@dimen/spacing_56"
+          tools:text="4 day overdue" />
+      </LinearLayout>
+
+
+      <ImageButton
+        android:id="@+id/overdue_patient_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="@dimen/spacing_16"
+        android:layout_marginStart="@dimen/spacing_16"
+        android:background="@drawable/green_circle"
+        android:padding="4dp"
+        android:src="@drawable/ic_call_24dp"
+        android:tint="@color/white"
+        tools:ignore="ContentDescription" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/overdue_actions_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/patient_details"
+      android:orientation="vertical"
+      android:paddingBottom="@dimen/spacing_8"
+      android:paddingTop="@dimen/spacing_16"
+      android:visibility="gone">
+
+      <TextView
+        style="@style/Clinic.V2.TextAppearance.Body2Tag.Grey1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_12"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/spacing_4"
+        android:paddingStart="@dimen/spacing_56"
+        android:text="@string/overduelist_result_of_call"
+        android:textAllCaps="true" />
+
+      <TextView
+        android:id="@+id/overdue_agreed_to_visit"
+        style="@style/Clinic.V2.OverdueListAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_radio_button_unchecked_green1_24dp"
+        android:text="@string/overduelist_agreed_to_visit" />
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="@dimen/spacing_16"
+        android:layout_marginStart="@dimen/spacing_56"
+        android:background="@color/grey3" />
+
+      <TextView
+        android:id="@+id/overdue_reminder_later"
+        style="@style/Clinic.V2.OverdueListAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_radio_button_unchecked_yellow0_24dp"
+        android:text="@string/overduelist_remind_call_later" />
+
+      <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginEnd="@dimen/spacing_16"
+        android:layout_marginStart="@dimen/spacing_56"
+        android:background="@color/grey3" />
+
+      <TextView
+        android:id="@+id/overdue_remove_from_list"
+        style="@style/Clinic.V2.OverdueListAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_remove_circle_outline_red1_24dp"
+        android:text="@string/overduelist_remove_from_list" />
+    </LinearLayout>
+
+  </RelativeLayout>
+
+</android.support.v7.widget.CardView>

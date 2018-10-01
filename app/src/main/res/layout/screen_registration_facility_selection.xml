@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.simple.clinic.registration.facility.RegistrationFacilitySelectionScreen xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:animateLayoutChanges="true"
+  android:background="@color/white"
+  android:orientation="vertical">
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/registrationfacilities_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:navigationIcon="@drawable/ic_arrow_back_24dp"
+    app:title="@string/registrationfacilities_screen_title" />
+
+  <include
+    android:id="@+id/registrationfacilities_progress"
+    layout="@layout/screen_registration_facility_selection_progress_state"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/registrationfacilities_toolbar"
+    android:visibility="gone" />
+
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/registrationfacilities_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@+id/registrationfacilities_done"
+    android:layout_below="@+id/registrationfacilities_toolbar"
+    android:scrollbarStyle="insideOverlay"
+    android:scrollbars="vertical"
+    tools:listitem="@layout/list_facility_selection" />
+
+  <LinearLayout
+    android:id="@+id/registrationfacilities_error_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <TextView
+      android:id="@+id/registrationfacilities_error_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="sans-serif-medium"
+      android:text="@string/registrationfacilities_error_unexpected_title"
+      android:textColor="@color/black_opacity_40"
+      android:textSize="20sp" />
+
+    <TextView
+      android:id="@+id/registrationfacilities_error_message"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="@dimen/spacing_48"
+      android:layout_marginStart="@dimen/spacing_48"
+      android:layout_marginTop="@dimen/spacing_8"
+      android:gravity="center_horizontal"
+      android:lineSpacingExtra="@dimen/spacing_8"
+      android:textColor="@color/black_opacity_40"
+      android:textSize="@dimen/textsize_16"
+      tools:text="@string/registrationfacilities_error_unexpected_message" />
+
+    <Button
+      android:id="@+id/registrationfacilities_error_retry"
+      style="@style/Widget.AppCompat.Button.Borderless.Colored"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/registrationfacilities_retry" />
+  </LinearLayout>
+</org.simple.clinic.registration.facility.RegistrationFacilitySelectionScreen>

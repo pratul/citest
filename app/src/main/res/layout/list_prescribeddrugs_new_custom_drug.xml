@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.simple.clinic.widgets.OmegaCenterIconButton android:id="@+id/prescribeddrug_item_addnewprescription"
+  style="@style/Clinic.V2.Button.WithIcon.Blue2"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_margin="@dimen/spacing_12"
+  android:drawableStart="@drawable/ic_add_medicines"
+  android:text="@string/patient_prescribeddrugs_add_custom_prescription" />

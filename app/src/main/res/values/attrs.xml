@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="ClearFieldImageButton">
+    <attr name="cleareableField" format="reference" />
+  </declare-styleable>
+
+  <declare-styleable name="ViewFlipperWithDebugPreview">
+    <attr name="debug_displayedChild" format="integer" />
+  </declare-styleable>
+
+  <declare-styleable name="ToolbarWithTintedNavIcon">
+    <attr name="navigationIconTint" format="color" />
+  </declare-styleable>
+
+  <declare-styleable name="PrimarySolidButtonWithFrame">
+    <attr name="frameBackgroundEnabled" format="color"/>
+    <attr name="frameBackgroundDisabled" format="color"/>
+    <attr name="buttonBackgroundEnabled" format="color"/>
+    <attr name="buttonBackgroundDisabled" format="color"/>
+  </declare-styleable>
+</resources>

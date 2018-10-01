@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="org.simple.clinic"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:installLocation="preferExternal">
+
+  <uses-permission android:name="android.permission.CALL_PHONE" />
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+  <application
+    android:name=".ReleaseClinicApp"
+    android:allowBackup="false"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:supportsRtl="true"
+    android:theme="@style/Clinic.V2.Theme"
+    tools:ignore="AllowBackup,GoogleAppIndexingWarning"
+    tools:replace="android:allowBackup">
+
+    <activity
+      android:name=".activity.TheActivity"
+      android:launchMode="singleTask"
+      android:screenOrientation="portrait"
+      android:windowSoftInputMode="adjustResize">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+
+    <activity
+      android:name=".search.PatientSearchAgeFilterSheet"
+      android:theme="@style/Clinic.V2.Theme.BottomSheetActivity"
+      android:windowSoftInputMode="adjustResize" />
+
+    <activity
+      android:name=".drugs.selection.entry.CustomPrescriptionEntrySheet"
+      android:theme="@style/Clinic.V2.Theme.BottomSheetActivity"
+      android:windowSoftInputMode="adjustResize" />
+
+    <activity
+      android:name=".bp.entry.BloodPressureEntrySheet"
+      android:theme="@style/Clinic.V2.Theme.BottomSheetActivity"
+      android:windowSoftInputMode="adjustResize" />
+
+    <activity
+      android:name=".scheduleappointment.ScheduleAppointmentSheet"
+      android:theme="@style/Clinic.V2.Theme.BottomSheetActivity"
+      android:windowSoftInputMode="adjustResize" />
+
+    <activity
+      android:name=".home.overdue.appointmentreminder.AppointmentReminderSheet"
+      android:theme="@style/Clinic.V2.Theme.BottomSheetActivity"
+      android:windowSoftInputMode="adjustResize" />
+
+    <activity
+      android:name=".home.overdue.removepatient.RemoveAppointmentSheet"
+      android:theme="@style/Clinic.V2.Theme.BottomSheetActivity"
+      android:windowSoftInputMode="adjustResize" />
+
+    <receiver
+      android:name=".login.OtpSmsReceiver"
+      android:exported="true"
+      tools:ignore="ExportedReceiver">
+      <intent-filter>
+        <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
+      </intent-filter>
+    </receiver>
+  </application>
+</manifest>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.simple.clinic.home.patients.PatientsScreen android:id="@+id/patients_root"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+
+  <org.simple.clinic.widgets.OmegaCenterIconButton
+    android:id="@+id/patients_search_patients"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:layout_marginEnd="@dimen/spacing_16"
+    android:layout_marginStart="@dimen/spacing_16"
+    android:layout_marginTop="@dimen/spacing_48"
+    android:background="@drawable/button_outline_ripple"
+    android:drawablePadding="@dimen/spacing_8"
+    android:drawableStart="@drawable/ic_search_24dp"
+    android:fontFamily="sans-serif"
+    android:gravity="center"
+    android:paddingStart="20dp"
+    android:text="@string/home_search_patient_name_phone"
+    android:textAllCaps="false"
+    android:textColor="?colorAccent"
+    android:textSize="@dimen/textsize_18"
+    app:drawableTint="?colorAccent"
+    tools:ignore="MissingPrefix,RtlSymmetry" />
+
+  <!-- We don't currently have a center color for the background gradient
+  so we can't adjust the centerY of the background. This lets us have a
+  different centerY because we can freely adjust the height of this view.
+   -->
+  <View
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/patients_search_patients"
+    android:layout_marginTop="@dimen/spacing_48"
+    android:background="@drawable/background_patients" />
+
+  <ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/patients_search_patients"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="@dimen/spacing_48"
+    android:src="@drawable/register_illustration"
+    tools:ignore="ContentDescription" />
+
+  <org.simple.clinic.widgets.ViewFlipperWithDebugPreview
+    android:id="@+id/patients_user_status_viewflipper"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    app:debug_displayedChild="2">
+
+    <View
+      android:id="@+id/patients_user_status_hidden"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+
+    <include layout="@layout/patients_user_status_awaitingapproval" />
+
+    <include layout="@layout/patients_user_status_approved" />
+
+    <include layout="@layout/patients_user_status_awaitingsmsverification" />
+  </org.simple.clinic.widgets.ViewFlipperWithDebugPreview>
+</org.simple.clinic.home.patients.PatientsScreen>

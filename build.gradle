@@ -1,0 +1,99 @@
+buildscript {
+  ext.versions = [
+      minSdk              : 21,
+      compileSdk          : 27,
+      kotlin              : '1.2.71',
+      supportLib          : '27.1.1',
+      supportTest         : '1.0.2',
+      timber              : '4.7.0',
+      dagger              : '2.16',
+      butterKnife         : '8.8.1',
+      kotterKnife         : 'e157638df1',
+      archComponents      : '1.1.1',
+      moshi               : '1.6.0',
+      retrofit            : '2.4.0',
+      stetho              : '1.5.0',
+      sentry              : '1.7.4',
+      groupie             : '2.1.0',
+      flow                : '1.0.0-alpha3',
+      rxJava              : '2.1.9',
+      rxAndroid           : '2.0.2',
+      rxBinding           : '2.1.1',
+      rxKotlin            : '2.2.0',
+      rxPreference        : '2.0.0',
+      qrReader            : '2.1.2',
+      jcabiXml            : '0.21.4',
+      threetenbp          : '1.3.6',
+      lazythreetenbp      : '0.3.0',
+      okLoggingInterceptor: '3.10.0',
+      traceur             : '1.0.1',
+      maskedEditText      : '1.0.5',
+      itemAnimators       : '1.0.2',
+      jbcrypt             : '0.3m',
+      workRuntimeKtx      : '1.0.0-alpha02',
+      faker               : '1.2.7',
+      truth               : '0.40',
+      junit               : '4.12',
+      mockito             : '2.18.3',
+      mockitoKotlin       : '1.5.0',
+      junitParams         : '1.1.1',
+      sqliteAndroid       : '3.24.0',
+      playServicesAuth    : '16.0.0',
+      playServicesVision  : '15.0.2',
+      viewPump            : '1.0.0',
+      heap                : '0.7.1',
+      pinEntryEditText    : '1.3.3',
+      fbShimmer           : '0.3.0'
+  ]
+
+  repositories {
+    google()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://heap-maven-public.s3.amazonaws.com/android-testing' }
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.1.4'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+    classpath "io.sentry:sentry-android-gradle-plugin:$versions.sentry"
+    classpath "com.heapanalytics.android:heap-android-gradle:$versions.heap"
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    jcenter()
+  }
+}
+
+task clean(type: Delete) {
+  delete rootProject.buildDir
+}
+
+task compileSpellfix(type: Copy, dependsOn: 'spellfix:externalNativeBuildRelease') {
+  doLast {
+    logger.lifecycle("Copied libspellfix native libs to app jniLibs!")
+  }
+  from 'libspellfix/build/intermediates/ndkBuild/release'
+  into 'app/src/main/jniLibs'
+  eachFile {
+    if (!name.endsWith('.so')) {
+      exclude()
+    } else {
+      def pathParts = it.path.split("/").reverse()
+      // We expect the 0th item to be the native lib name and the 1st item to be the abi
+      if (pathParts.length < 2) {
+        logger.log(LogLevel.ERROR, "Unrecognized native lib path: $it.path")
+        throw TaskExecutionException(this)
+      }
+
+      def libName = pathParts[0]
+      def libAbi = pathParts[1]
+      it.path = "$libAbi/$libName"
+      logger.lifecycle("Copy native lib: $it.sourcePath to: $it.path")
+    }
+  }
+  includeEmptyDirs false
+}

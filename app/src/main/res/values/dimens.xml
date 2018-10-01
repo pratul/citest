@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="elevation_toolbar">6dp</dimen>
+  <dimen name="elevation_cardview">4dp</dimen>
+  <dimen name="corner_radius_button">2dp</dimen>
+
+  <dimen name="spacing_4">4dp</dimen>
+  <dimen name="spacing_8">8dp</dimen>
+  <dimen name="spacing_12">12dp</dimen>
+  <dimen name="spacing_16">16dp</dimen>
+  <dimen name="spacing_24">24dp</dimen>
+  <dimen name="spacing_32">32dp</dimen>
+  <dimen name="spacing_40">40dp</dimen>
+  <dimen name="spacing_44">44dp</dimen>
+  <dimen name="spacing_48">48dp</dimen>
+  <dimen name="spacing_56">56dp</dimen>
+  <dimen name="spacing_96">96dp</dimen>
+  <dimen name="spacing_128">128dp</dimen>
+
+  <dimen name="textsize_12">12sp</dimen>
+  <dimen name="textsize_14">14sp</dimen>
+  <dimen name="textsize_16">16sp</dimen>
+  <dimen name="textsize_18">18sp</dimen>
+  <dimen name="textsize_20">20sp</dimen>
+  <dimen name="textsize_34">34sp</dimen>
+
+  <dimen name="prescribeddrugs_protocol_drug_selected_padding">16dp</dimen>
+  <dimen name="prescribeddrugs_protocol_drug_unselected_padding">0dp</dimen>
+
+  <dimen name="summary_prescriptions_update_when_empty">@dimen/spacing_24</dimen>
+  <dimen name="summary_prescriptions_update_when_non_empty">@dimen/spacing_8</dimen>
+</resources>

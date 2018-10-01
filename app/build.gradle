@@ -1,0 +1,205 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'io.sentry.android.gradle'
+apply plugin: 'com.heapanalytics.android'
+
+apply from: "../quality/install-git-hook.gradle"
+
+repositories {
+  maven { url 'https://jitpack.io' }
+  maven { url 'https://heap-maven-public.s3.amazonaws.com/android-testing' }
+}
+
+sentry {
+  autoProguardConfig true
+  // We can disable auto upload of proguard mappings since we use -dontobfuscate when running proguard
+  autoUpload false
+}
+
+kapt {
+  arguments {
+    arg("room.schemaLocation", "$projectDir/schemas".toString())
+  }
+}
+
+android {
+  compileSdkVersion versions.compileSdk
+
+  defaultConfig {
+    applicationId "org.simple.clinic"
+    minSdkVersion versions.minSdk
+    targetSdkVersion versions.compileSdk
+    versionCode 1
+    versionName "0.1"
+    multiDexEnabled true
+
+    testInstrumentationRunner "org.simple.clinic.AndroidTestJUnitRunner"
+    proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+  }
+
+  buildTypes {
+    debug {
+      ext.heap = ["enabled": false]
+      applicationIdSuffix ".debug"
+      minifyEnabled false
+      useProguard false
+      shrinkResources false
+      buildConfigField "boolean", "DISABLE_SCREENSHOT", "false"
+    }
+
+    release {
+      debuggable false
+      ext.heap = ["enabled": true]
+      if (runProguard.equalsIgnoreCase("true")) {
+        minifyEnabled true
+        shrinkResources true
+        useProguard true
+      } else {
+        minifyEnabled false
+        shrinkResources false
+        useProguard false
+      }
+      buildConfigField "boolean", "DISABLE_SCREENSHOT", "true"
+    }
+  }
+
+  flavorDimensions 'track'
+
+  productFlavors {
+    qa {
+      dimension 'track'
+      applicationIdSuffix ".qa"
+      versionNameSuffix "-qa"
+      buildConfigField "String", "API_ENDPOINT", "\"" + qaApiEndpoint + "\""
+      buildConfigField "String", "HEAP_ID", "\"" + qaHeapId + "\""
+    }
+
+    staging {
+      dimension 'track'
+      applicationIdSuffix ".staging"
+      versionNameSuffix "-staging"
+      buildConfigField "String", "API_ENDPOINT", "\"" + stagingApiEndpoint + "\""
+      buildConfigField "String", "HEAP_ID", "\"" + stagingHeapId + "\""
+    }
+
+    production {
+      dimension 'track'
+      buildConfigField "String", "API_ENDPOINT", "\"" + productionApiEndpoint + "\""
+      buildConfigField "String", "HEAP_ID", "\"" + productionHeapId + "\""
+    }
+  }
+
+  variantFilter { variant ->
+    if (variant.name == "qaRelease" ||
+        variant.name == "stagingDebug" ||
+        variant.name == "productionDebug"
+    ) {
+      setIgnore(true)
+    }
+  }
+
+  lintOptions {
+    lintConfig file("$project.rootDir/quality/lint.xml")
+    warningsAsErrors true
+    abortOnError true
+    checkReleaseBuilds false
+  }
+
+  compileOptions {
+    targetCompatibility 1.8
+    sourceCompatibility 1.8
+  }
+
+  androidExtensions {
+    experimental = true
+  }
+
+  sourceSets {
+    androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+  }
+
+  packagingOptions {
+    // Deprecated ABIs. See https://developer.android.com/ndk/guides/abis
+    exclude 'lib/mips/libsqlite3x.so'
+    exclude 'lib/mips64/libsqlite3x.so'
+    exclude 'lib/armeabi/libsqlite3x.so'
+  }
+}
+
+dependencies {
+  implementation project(path: ':router')
+
+  testImplementation "junit:junit:$versions.junit"
+  testImplementation "org.mockito:mockito-core:$versions.mockito"
+  testImplementation "com.nhaarman:mockito-kotlin:$versions.mockitoKotlin"
+  testImplementation "pl.pragmatists:JUnitParams:$versions.junitParams"
+  testImplementation "com.google.truth:truth:$versions.truth"
+  testImplementation "com.github.blocoio:faker:$versions.faker"
+
+  androidTestImplementation "com.android.support:support-annotations:$versions.supportLib"
+  androidTestImplementation "com.android.support.test:runner:$versions.supportTest"
+  androidTestImplementation "com.android.support.test:rules:$versions.supportTest"
+  androidTestImplementation "com.google.truth:truth:$versions.truth"
+  androidTestImplementation "com.github.blocoio:faker:$versions.faker"
+  androidTestImplementation "android.arch.persistence.room:testing:$versions.archComponents"
+  androidTestImplementation "android.arch.core:core-testing:$versions.archComponents"
+  kaptAndroidTest "com.google.dagger:dagger-compiler:$versions.dagger"
+
+  debugImplementation "com.facebook.stetho:stetho:$versions.stetho"
+  debugImplementation "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
+
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+  testImplementation "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin"
+
+  implementation "com.android.support:appcompat-v7:$versions.supportLib"
+  implementation "com.android.support:recyclerview-v7:$versions.supportLib"
+  implementation "com.android.support:design:$versions.supportLib"
+  implementation "com.android.support:cardview-v7:$versions.supportLib"
+  implementation "android.arch.persistence.room:runtime:$versions.archComponents"
+  kapt "android.arch.persistence.room:compiler:$versions.archComponents"
+  implementation "android.arch.persistence.room:rxjava2:$versions.archComponents"
+  implementation "android.arch.work:work-runtime-ktx:$versions.workRuntimeKtx"
+
+  implementation "com.jakewharton.timber:timber:$versions.timber"
+  implementation "com.google.dagger:dagger:$versions.dagger"
+  kapt "com.google.dagger:dagger-compiler:$versions.dagger"
+  implementation("com.github.JakeWharton:kotterknife:$versions.kotterKnife") {
+    exclude group: 'com.android.support'
+  }
+  implementation "io.reactivex.rxjava2:rxjava:$versions.rxJava"
+  implementation "io.reactivex.rxjava2:rxandroid:$versions.rxAndroid"
+  implementation "com.jakewharton.rxbinding2:rxbinding:$versions.rxBinding"
+  implementation "io.reactivex.rxjava2:rxkotlin:$versions.rxKotlin"
+  implementation "com.jcabi:jcabi-xml:$versions.jcabiXml"
+  implementation "org.threeten:threetenbp:$versions.threetenbp:no-tzdb"
+  implementation "com.gabrielittner.threetenbp:lazythreetenbp:$versions.lazythreetenbp"
+  implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
+  implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
+  implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
+  implementation "com.squareup.okhttp3:logging-interceptor:$versions.okLoggingInterceptor"
+  implementation "com.squareup.moshi:moshi:$versions.moshi"
+  kapt "com.squareup.moshi:moshi-kotlin-codegen:$versions.moshi"
+  implementation "com.f2prateek.rx.preferences2:rx-preferences:$versions.rxPreference"
+  implementation "com.tspoon.traceur:traceur:$versions.traceur"
+  implementation "ru.egslava:MaskedEditText:$versions.maskedEditText"
+  implementation "io.sentry:sentry-android:$versions.sentry"
+  implementation "com.xwray:groupie:$versions.groupie"
+  implementation "com.xwray:groupie-kotlin-android-extensions:$versions.groupie"
+  implementation "com.mikepenz:itemanimators:$versions.itemAnimators@aar"
+  implementation "org.mindrot:jbcrypt:$versions.jbcrypt"
+  implementation "com.squareup.flow:flow:$versions.flow"
+  implementation "io.requery:sqlite-android:$versions.sqliteAndroid"
+
+  implementation "com.google.android.gms:play-services-auth:$versions.playServicesAuth"
+  // Adding an explicit dependency on this because the qrreader lib exposes an older dependency
+  implementation "com.google.android.gms:play-services-vision:$versions.playServicesVision"
+  implementation ("com.github.nisrulz:qreader:$versions.qrReader") {
+    exclude group: 'com.google.android.gms', module: 'play-services-vision'
+  }
+  implementation "io.github.inflationx:viewpump:$versions.viewPump"
+  implementation "com.heapanalytics.android:heap-android-client:$versions.heap"
+  implementation "com.facebook.shimmer:shimmer:$versions.fbShimmer"
+  implementation "com.alimuzaffar.lib:pinentryedittext:$versions.pinEntryEditText"
+}

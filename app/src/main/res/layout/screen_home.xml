@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.simple.clinic.home.HomeScreen android:id="@+id/home_root"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".activity.TheActivity">
+
+  <android.support.v7.widget.Toolbar
+    android:id="@+id/home_toolbar"
+    style="Clinic.V2.ToolbarStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="0dp"
+    app:logo="@drawable/logo_regular"
+    tools:targetApi="lollipop" />
+
+  <android.support.v4.view.ViewPager
+    android:id="@+id/home_viewpager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/home_toolbar">
+
+    <android.support.design.widget.TabLayout
+      android:id="@+id/home_tabs"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="?colorPrimary"
+      android:elevation="@dimen/elevation_toolbar"
+      app:tabIndicatorColor="@color/green2"
+      app:tabIndicatorHeight="4dp"
+      app:tabSelectedTextColor="@color/white100"
+      app:tabTextColor="@color/white48"
+      tools:ignore="UnusedAttribute" />
+
+  </android.support.v4.view.ViewPager>
+
+</org.simple.clinic.home.HomeScreen>
